@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { withRouter } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
+import { inject } from 'mobx-react';
+import DevTools from 'mobx-react-devtools';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// import components
+import { Main, Login, Signup } from 'pages';
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.props.loadUser();
+    this.props.history.listen((location, action) => {
+      console.log('on route change');
+      this.props.loadUser();
+    });
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <Route exact path="/" component={Main} />
+        <Switch>
+          <Route exact path="/signup/:sns" component={Signup} />
+          <Route exact path="/signup" component={Signup} />
+        </Switch>
+        {process.env.NODE_ENV === 'local' && <DevTools />}
+      </React.Fragment>
+    );
+  }
 }
 
-export default App;
+export default inject(({ userStore }) => ({
+  loadUser: userStore.loadUser
+}))(withRouter(App));

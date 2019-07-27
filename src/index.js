@@ -1,12 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { Provider } from 'mobx-react';
+import { BrowserRouter } from 'react-router-dom';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// import components
+import { default as stores } from 'modules/stores';
+import App from 'App';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// import styles
+import CssBaseline from '@material-ui/core/CssBaseline'; //import 'index.css';
+import { ThemeProvider } from '@material-ui/styles';
+import theme from 'themes/muiTheme';
+
+ReactDOM.render(
+  <Provider {...stores}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
+  </Provider>,
+  document.getElementById('root')
+);
