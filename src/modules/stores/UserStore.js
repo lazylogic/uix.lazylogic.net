@@ -1,12 +1,9 @@
-import { observable, action, computed } from 'mobx';
-import { asyncAction } from 'mobx-utils';
-import autobind from 'autobind-decorator';
+import { observable, action, flow, set } from 'mobx';
 
 // import modules
 import UserModel from 'modules/models/UserModel';
 import UserRepository from 'modules/repositories/UserRepository';
 
-@autobind
 class UserStore {
   @observable user = new UserModel();
 
@@ -14,34 +11,31 @@ class UserStore {
     this.rootStore = rootStore;
   }
 
-  @action setEmail(email) {
-    this.user.email = email;
-  }
-
-  @action setPasswd(passwd) {
-    this.user.passwd = passwd;
-  }
-
-  @computed get name() {
-    return this.user.firstName + ' ' + this.user.lastName;
-  }
-
-  @computed get isLogin() {
-    return this.user.userPid != null;
-  }
-
-  loadUser(params) {
-    console.log('UserStore.loadUser');
-  }
-
-  @asyncAction
-  async *register(params) {
-    const { data, status } = yield UserRepository.register(params);
-
-    if (status === 200) {
-      this.user = new UserModel(data);
+  @action.bound
+  auth = flow(function*() {
+    try {
+      const response = yield UserRepository.auth();
+      set(this.user, response.data || {});
+      console.log('UserStore.auth()', response.data);
+    } catch (error) {
+      return error;
     }
-  }
+  });
+
+  @action.bound
+  create = flow(function*(user) {
+    return yield UserRepository.create(user);
+  });
+
+  @action.bound
+  update = flow(function*(user) {
+    return yield UserRepository.update(user);
+  });
+
+  @action.bound
+  delete = flow(function*(id) {
+    return yield UserRepository.delete(id);
+  });
 }
 
 export default UserStore;

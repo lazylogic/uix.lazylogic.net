@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header, Footer } from 'containers';
 
-export default function PageTemplate(props) {
+export default function DefaultTempate(props) {
   return (
     <React.Fragment>
       <Header title="abc" />

@@ -3,7 +3,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import { withStyles } from '@material-ui/styles';
 
-// import MUI
+// import components
+import styles from './HeaderStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -11,7 +12,6 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import styles from './HeaderStyles';
 
 function ButtonAppBar(props) {
   const { classes } = props;
@@ -27,10 +27,10 @@ function ButtonAppBar(props) {
               News {props.title}
             </Link>
           </Typography>
-          <Button color="inherit" component={RouterLink} to="/login">
+          <Button variant="text" color="inherit" component={RouterLink} to="/login">
             Login
           </Button>
-          <Button color="inherit" component={RouterLink} to="/signup">
+          <Button variant="text" color="inherit" component={RouterLink} to="/signup">
             Signup
           </Button>
         </Toolbar>

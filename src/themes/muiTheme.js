@@ -3,11 +3,15 @@ import { createMuiTheme } from '@material-ui/core/styles';
 export default createMuiTheme({
   props: {
     MuiInputBase: {
-      margin: 'dense'
+      margin: 'dense',
     },
     MuiTextField: {
       margin: 'dense',
-      variant: 'outlined'
-    }
-  }
+      variant: 'outlined',
+    },
+    MuiButton: {
+      margin: 'dense',
+      variant: 'contained',
+    },
+  },
 });

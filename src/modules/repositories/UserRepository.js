@@ -1,30 +1,62 @@
 import axios from 'axios';
 
 class UserRepository {
-  API_URL = '/rest/v1/users';
+  AUTH_URL = '/api/v1/auth';
+  API_URL = '/api/v1/users';
 
   constructor(attr) {
     Object.assign(this, attr);
   }
 
+  auth() {
+    try {
+      return axios.get(this.AUTH_URL);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   findAll(params) {
-    return axios.get(this.URL, { params });
+    try {
+      return axios.get(this.API_URL, { params });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  findOne(userPid) {
-    return axios.get(`${this.URL}/${userPid}`);
+  findOne(id) {
+    try {
+      return axios.get(`${this.API_URL}/${id}`);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  registe(params) {
-    return axios.post(this.URL, { params });
+  create(user) {
+    try {
+      console.log('UserRepository.create()', user);
+      return axios.post(this.API_URL, user);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  update(userPid, params) {
-    return axios.patch(`${this.URL}/${userPid}`, { params });
+  update(user) {
+    try {
+      console.log('UserRepository.update()', user);
+      return axios.patch(`${this.API_URL}/${user.id}`, user);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  delete(userPid) {
-    return axios.delete(`${this.URL}/${userPid}`);
+  delete(id) {
+    try {
+      console.log('UserRepository.delete()', id);
+      return axios.delete(`${this.API_URL}/${id}`);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 

@@ -1,10 +1,6 @@
 import React from 'react';
 import { TextValidator } from 'react-material-ui-form-validator';
 
-export default function EmailField(props) {
+export default function FormField(props) {
   return <TextValidator {...props} />;
 }
-
-EmailField.defaultProps = {
-  label: 'Email',
-};
