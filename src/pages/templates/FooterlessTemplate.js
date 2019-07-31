@@ -8,9 +8,6 @@ export default function DefaultTempate(props) {
         <Header title="abc" />
       </header>
       <main>{props.children}</main>
-      <footer>
-        <Footer />
-      </footer>
     </React.Fragment>
   );
 }

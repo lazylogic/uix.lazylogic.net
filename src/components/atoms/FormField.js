@@ -1,6 +1,9 @@
 import React from 'react';
 import { TextValidator } from 'react-material-ui-form-validator';
+import { withErrorMessage } from 'utils';
 
-export default function FormField(props) {
+function FormField(props) {
   return <TextValidator {...props} />;
 }
+
+export default withErrorMessage(FormField);
